@@ -5,11 +5,8 @@ FactoryGirl.define do
     email {FFaker::Internet.email}
 
     after(:build) do |user|
-      ["Reply to Zack's email", "Complete Homework", "Learn Rspec"].each do |task|
-        user.tasks << FactoryGirl.build(:email,
-          name: task,
-          user: user
-        )
+      [:email, :homework].each do |task|
+        user.tasks << FactoryGirl.build(:email, user: user)
       end
     end
   end

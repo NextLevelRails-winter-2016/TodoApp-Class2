@@ -31,7 +31,7 @@ RSpec.describe User, type: :model do
  end
 
  it 'has many tasks' do
-   expect(user.tasks.length).to eq(3)
+   expect(user.tasks.length).to eq(2)
  end
 
  it 'returns tasks due today' do
