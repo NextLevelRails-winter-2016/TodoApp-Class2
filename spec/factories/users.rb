@@ -4,9 +4,11 @@ FactoryGirl.define do
     lastname {FFaker::Name.last_name}
     email {FFaker::Internet.email}
 
-    after(:build) do |user|
-      [:email, :homework].each do |task|
-        user.tasks << FactoryGirl.build(:email, user: user)
+    factory :user_with_tasks do
+      after(:build) do |user|
+        [:email, :homework].each do |task|
+          user.tasks << FactoryGirl.build(:email, user: user)
+        end
       end
     end
   end
