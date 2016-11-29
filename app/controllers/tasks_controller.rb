@@ -1,9 +1,9 @@
 class TasksController < ApplicationController
 
   before_action :set_task, only: [:show, :edit, :update, :destroy]
-
+  before_action :authenticate_user!
   def index
-    @tasks = Task.all
+    @tasks = Task.where(user: current_user)
   end
 
   def new

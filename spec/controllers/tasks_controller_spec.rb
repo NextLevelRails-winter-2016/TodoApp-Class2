@@ -1,19 +1,34 @@
 require 'rails_helper'
 
 RSpec.describe TasksController, type: :controller do
+
+  before { sign_in(create(:user)) }
+
+  describe 'unathenticated' do
+   it 'redirects user to login page when not signed in' do
+
+     sign_out(:user)
+     get :index
+     expect(response).to redirect_to(new_user_session_path)
+   end
+
+ end
   describe 'GET #index' do
     it 'renders the index template' do
       get :index
       expect(response).to render_template(:index)
     end
 
-    it 'returns all tasks' do
-      user = create(:user)
+    it 'returns all tasks for current user' do
+      user = create(:user_with_tasks)
       task = create(:homework)
+
+      sign_in(user)
 
       get :index
 
-      expect(assigns(:tasks)).not_to be_nil
+      expect(Task.all.length).to eq(3)
+      expect(assigns(:tasks).length).to eq(2)
     end
   end
 

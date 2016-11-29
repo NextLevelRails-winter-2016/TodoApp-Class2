@@ -3,11 +3,13 @@ FactoryGirl.define do
     firstname {FFaker::Name.first_name}
     lastname {FFaker::Name.last_name}
     email {FFaker::Internet.email}
+    password 'Password1'
+    encrypted_password 'Password1'
 
     factory :user_with_tasks do
       after(:build) do |user|
         [:email, :homework].each do |task|
-          user.tasks << FactoryGirl.build(:email, user: user)
+          user.tasks << FactoryGirl.build(task, user: user)
         end
       end
     end
